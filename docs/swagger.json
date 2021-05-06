@@ -1,0 +1,140 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "gin框架实现论坛项目",
+        "title": "bluebell项目接口文档",
+        "contact": {
+            "name": "LiYangfan",
+            "url": "http://www.baidu.com"
+        },
+        "version": "1.0"
+    },
+    "host": "127.0.0.1:8084",
+    "basePath": "/api/v1",
+    "paths": {
+        "/posts2": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "可按社区按时间或分数排序查询帖子列表接口",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "帖子相关接口"
+                ],
+                "summary": "升级版帖子列表接口",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer 用户令牌",
+                        "name": "Authorization",
+                        "in": "header"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "可以为空",
+                        "name": "community_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "example": "score",
+                        "name": "order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller._ResponsePostList"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "controller._ResponsePostList": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "业务的响应状态码",
+                    "type": "integer"
+                },
+                "data": {
+                    "description": "数据",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.ApiPostDetail"
+                    }
+                },
+                "message": {
+                    "description": "提示信息",
+                    "type": "string"
+                }
+            }
+        },
+        "model.ApiPostDetail": {
+            "type": "object",
+            "required": [
+                "community_id",
+                "content",
+                "title"
+            ],
+            "properties": {
+                "author_id": {
+                    "description": "下移Title       string    `json:\"title\" db:\"title\"`\n下移Content     string    `json:\"content\" db:\"content\"`",
+                    "type": "integer"
+                },
+                "author_name": {
+                    "type": "string"
+                },
+                "community_id": {
+                    "type": "integer"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "create_time": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "introduction": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "vote_num": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,94 @@
+basePath: /api/v1
+definitions:
+  controller._ResponsePostList:
+    properties:
+      code:
+        description: 业务的响应状态码
+        type: integer
+      data:
+        description: 数据
+        items:
+          $ref: '#/definitions/model.ApiPostDetail'
+        type: array
+      message:
+        description: 提示信息
+        type: string
+    type: object
+  model.ApiPostDetail:
+    properties:
+      author_id:
+        description: |-
+          下移Title       string    `json:"title" db:"title"`
+          下移Content     string    `json:"content" db:"content"`
+        type: integer
+      author_name:
+        type: string
+      community_id:
+        type: integer
+      content:
+        type: string
+      create_time:
+        type: string
+      id:
+        type: integer
+      introduction:
+        type: string
+      name:
+        type: string
+      status:
+        type: integer
+      title:
+        type: string
+      vote_num:
+        type: integer
+    required:
+    - community_id
+    - content
+    - title
+    type: object
+host: 127.0.0.1:8084
+info:
+  contact:
+    name: LiYangfan
+    url: http://www.baidu.com
+  description: gin框架实现论坛项目
+  title: bluebell项目接口文档
+  version: "1.0"
+paths:
+  /posts2:
+    get:
+      consumes:
+      - application/json
+      description: 可按社区按时间或分数排序查询帖子列表接口
+      parameters:
+      - description: Bearer 用户令牌
+        in: header
+        name: Authorization
+        type: string
+      - description: 可以为空
+        in: query
+        name: community_id
+        type: integer
+      - example: score
+        in: query
+        name: order
+        type: string
+      - in: query
+        name: page
+        type: integer
+      - in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller._ResponsePostList'
+      security:
+      - ApiKeyAuth: []
+      summary: 升级版帖子列表接口
+      tags:
+      - 帖子相关接口
+swagger: "2.0"
